@@ -101,6 +101,10 @@ Our hash version is coded in first 2 bits."
   (-coerce [this md-create-fn write-handlers]
     (encode (:nil magics) (byte-array 0)))
 
+  clojure.lang.Ratio
+  (-coerce [this _ _]
+    (encode (:inst magics) (.getBytes (.toString this) "UTF-8")))
+
   clojure.lang.Symbol
   (-coerce [this md-create-fn write-handlers]
     (encode (:symbol magics) (encode-safe (str->utf8 this) md-create-fn)))
